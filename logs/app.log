@@ -711,3 +711,19 @@
 2026-04-02 11:47:25,189 INFO app.api.analyze: [003017] 数据采集完成，开始AI分析
 2026-04-02 11:48:23,985 INFO app.utils.ai_analyzer: [003017] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
 2026-04-02 11:48:23,986 INFO app.api.analyze: [003017] AI分析完成
+2026-04-02 11:51:21,974 INFO app.utils.stock_data_collector: [003017] 实时行情: OK (实时)
+2026-04-02 11:51:22,146 INFO app.utils.stock_data_collector: [003017] 新闻: OK, 10条
+2026-04-02 11:51:22,565 WARNING app.utils.stock_data_collector: [003017] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-02 11:51:22,572 INFO app.utils.stock_data_collector: [003017] 资金流向: OK, 10天
+2026-04-02 11:51:22,729 INFO app.utils.stock_data_collector: [003017] 股东: OK, 截止2025-09-30, 10位
+2026-04-02 11:51:22,762 WARNING app.utils.stock_data_collector: [003017] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-02 11:51:22,834 INFO app.utils.stock_data_collector: [003017] 财务摘要: OK, 7个指标
+2026-04-02 11:51:22,894 INFO app.utils.stock_data_collector: [003017] 分析师预测: OK, 3年
+2026-04-02 11:51:23,231 INFO app.utils.stock_data_collector: [003017] 利润表: OK, 6期
+2026-04-02 11:51:23,235 INFO app.utils.stock_data_collector: [003017] 现金流: OK, 6期
+2026-04-02 11:51:23,260 INFO app.utils.stock_data_collector: [003017] K线趋势: OK, 117天
+2026-04-02 11:51:28,367 INFO app.utils.stock_data_collector: [003017] 业绩预告: OK, 3条
+2026-04-02 11:51:28,369 INFO app.api.analyze: [003017] 数据采集完成，开始AI分析
+2026-04-02 11:51:48,231 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-02 11:52:42,727 INFO app.utils.ai_analyzer: [003017] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-02 11:52:42,727 INFO app.api.analyze: [003017] AI分析完成
