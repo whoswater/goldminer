@@ -727,3 +727,56 @@
 2026-04-02 11:51:48,231 INFO app.api.realtime: 实时行情刷新: 5496只股票
 2026-04-02 11:52:42,727 INFO app.utils.ai_analyzer: [003017] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
 2026-04-02 11:52:42,727 INFO app.api.analyze: [003017] AI分析完成
+2026-04-02 13:18:52,224 INFO app.tasks.scheduler: 调度器已启动: 公告爬取(09:00), 估值更新(18:00)
+2026-04-02 13:18:52,227 INFO app.utils.stock_list_cache: 股票列表已从本地加载: 5497 只
+2026-04-02 14:21:41,394 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-02 14:21:41,798 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-02 14:21:41,868 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-02 14:21:41,898 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-02 14:21:42,645 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-02 14:21:42,815 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-02 14:21:42,822 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-02 14:21:42,851 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-02 14:21:42,864 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-02 14:21:43,392 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 117天
+2026-04-02 14:21:43,406 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (日K降级)
+2026-04-02 14:21:48,659 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-02 14:21:48,661 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-02 14:21:48,661 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-02 14:22:01,603 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-02 14:23:45,531 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-02 14:23:45,532 INFO app.api.analyze: [002304] AI分析完成
+2026-04-02 15:05:00,021 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (实时)
+2026-04-02 15:05:00,258 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-02 15:05:00,457 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-02 15:05:00,499 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-02 15:05:00,662 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-02 15:05:00,824 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-02 15:05:00,904 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-02 15:05:00,973 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-02 15:05:01,233 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 117天
+2026-04-02 15:05:01,606 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-02 15:05:01,611 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-02 15:05:10,597 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-02 15:05:10,599 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-02 15:05:10,599 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-02 15:05:21,277 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-02 15:06:13,410 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-02 15:06:13,411 INFO app.api.analyze: [002304] AI分析完成
+2026-04-02 15:11:13,805 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (实时)
+2026-04-02 15:11:13,972 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-02 15:11:14,393 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-02 15:11:14,513 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-02 15:11:14,518 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-02 15:11:14,602 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-02 15:11:14,660 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-02 15:11:14,803 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-02 15:11:15,162 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 117天
+2026-04-02 15:11:15,482 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-02 15:11:15,512 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-02 15:11:23,456 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-02 15:11:23,462 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-02 15:11:23,463 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-02 15:11:26,664 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-02 15:13:05,450 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-02 15:13:05,451 INFO app.api.analyze: [002304] AI分析完成

@@ -360,6 +360,7 @@ function startAnalysis(code) {
     if (!code) return;
     if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
     currentCode = code;
+    klineLoaded = null;
 
     // 输入框自动补全公司名称
     const input = document.getElementById('stock-input');
@@ -385,8 +386,6 @@ function startAnalysis(code) {
         pollResult(code);
     });
 
-    // 同时加载K线
-    loadKline(code);
 }
 
 function reAnalyze() {
@@ -421,6 +420,7 @@ function pollResult(code) {
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('result-area').style.display = 'block';
                 renderResult(res.data);
+                loadKline(code);
                 // AI区域显示加载动画
                 document.getElementById('ai-analysis').innerHTML =
                     '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary me-2"></div>AI正在分析中，数据已就绪...</div>';
@@ -433,6 +433,7 @@ function pollResult(code) {
             document.getElementById('loading').style.display = 'none';
             document.getElementById('result-area').style.display = 'block';
             renderResult(res.data);
+            loadKline(code);
         })
         .catch(() => {
             pollTimer = setTimeout(() => pollResult(code), 2000);
@@ -818,7 +819,10 @@ function renderResult(data) {
     }
 }
 
+var klineLoaded = null;
 function loadKline(code) {
+    if (klineLoaded === code) return;
+    klineLoaded = code;
     fetch(`/api/realtime/kline/${code}?days=180`)
         .then(r => r.json())
         .then(data => {
