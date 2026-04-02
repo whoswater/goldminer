@@ -358,6 +358,7 @@ function parseCodeFromInput(raw) {
 function startAnalysis(code) {
     code = parseCodeFromInput(code);
     if (!code) return;
+    if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
     currentCode = code;
 
     // 输入框自动补全公司名称
@@ -407,6 +408,8 @@ function pollResult(code) {
     fetch(`/api/analyze/${code}${providerParam}`)
         .then(r => r.json())
         .then(res => {
+            // 如果用户已切换到其他股票，丢弃旧结果
+            if (code !== currentCode) return;
             if (res.status === 'running') {
                 document.getElementById('loading-text').textContent = res.message || '分析中...';
                 pollTimer = setTimeout(() => pollResult(code), 1000);
