@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}搜索记录 - GoldMiner{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>搜索记录</h3>
+    <button class="btn btn-sm btn-outline-danger" id="btn-clear">清空记录</button>
+</div>
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width:180px">搜索时间</th>
+                    <th style="width:100px">股票代码</th>
+                    <th style="width:120px">公司名称</th>
+                    <th style="width:100px">当时价格</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="history-table"></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function loadHistory() {
+    fetch('/api/search/history')
+        .then(r => r.json())
+        .then(data => {
+            const tbody = document.getElementById('history-table');
+            tbody.innerHTML = '';
+            (data || []).forEach(h => {
+                tbody.innerHTML += `<tr>
+                    <td class="small">${h.time || ''}</td>
+                    <td><strong>${h.code}</strong></td>
+                    <td>${h.name || '-'}</td>
+                    <td>${h.price ? Number(h.price).toFixed(2) : '-'}</td>
+                    <td><a href="/?code=${h.code}" class="btn btn-sm btn-outline-primary">再次分析</a></td>
+                </tr>`;
+            });
+            if (!(data || []).length) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">暂无搜索记录</td></tr>';
+            }
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadHistory();
+
+    document.getElementById('btn-clear').addEventListener('click', function() {
+        if (!confirm('确定清空所有搜索记录？')) return;
+        fetch('/api/search/clear', { method: 'POST' })
+            .then(() => loadHistory());
+    });
+});
+</script>
+{% endblock %}

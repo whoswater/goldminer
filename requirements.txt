@@ -1,0 +1,7 @@
+flask>=3.0
+pandas>=2.0
+apscheduler>=3.10
+akshare>=1.10
+requests>=2.31
+anthropic>=0.40
+openai>=1.0
