@@ -1,6 +1,6 @@
 App({
   globalData: {
-    aiProvider: 'doubao'
+    aiProvider: 'qwen'
   },
 
   onLaunch() {
