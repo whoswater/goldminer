@@ -2,12 +2,14 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask
+from flask_cors import CORS
 from app.config import ALL_DIRS, LOG_DIR
 
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'a-stock-valuation-secret'
+    CORS(app)  # 允许小程序跨域请求
 
     # 创建所有数据目录
     for d in ALL_DIRS:

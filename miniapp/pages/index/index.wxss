@@ -1,0 +1,343 @@
+.page-wrap {
+  min-height: 100vh;
+  background: #f3f4f6;
+}
+
+/* ==================== 搜索 Hero ==================== */
+.search-hero {
+  background: linear-gradient(160deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  padding: 40rpx 36rpx 48rpx;
+}
+
+.brand-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.brand-name {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.brand-dot {
+  margin: 0 12rpx;
+  color: rgba(255,255,255,0.3);
+  font-size: 28rpx;
+}
+
+.brand-slogan {
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.5);
+}
+
+/* 搜索框 */
+.search-box {
+  position: relative;
+  z-index: 20;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 52rpx;
+  padding: 10rpx 12rpx;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.12);
+}
+
+.search-focus {
+  box-shadow: 0 4rpx 30rpx rgba(192,57,43,0.25);
+}
+
+.search-prefix {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.search-icon-img {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 30rpx;
+  height: 60rpx;
+  color: #333;
+}
+
+.search-placeholder {
+  font-size: 28rpx;
+  color: #c0c0c0;
+}
+
+.search-btn {
+  height: 56rpx;
+  padding: 0 36rpx;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 8rpx;
+}
+
+.search-btn-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #fff;
+}
+
+.clear-icon {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: 50%;
+  background: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0 8rpx;
+}
+
+.clear-x {
+  font-size: 22rpx;
+  color: #999;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: -2rpx;
+}
+
+/* 热门标签 */
+.hot-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-top: 28rpx;
+}
+
+.hot-tag {
+  padding: 10rpx 28rpx;
+  background: rgba(255,255,255,0.12);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: rgba(255,255,255,0.75);
+  border: 1rpx solid rgba(255,255,255,0.1);
+}
+
+.hot-tag:active {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ==================== 搜索建议 ==================== */
+.suggest-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 15;
+}
+
+.suggest-list {
+  position: relative;
+  z-index: 20;
+  background: #fff;
+  margin: -24rpx 36rpx 0;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 12rpx 40rpx rgba(0,0,0,0.12);
+}
+
+.suggest-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.suggest-item:last-child {
+  border-bottom: none;
+}
+
+.suggest-item:active {
+  background: #fafafa;
+}
+
+.suggest-code {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #c0392b;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.suggest-name {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.suggest-arrow {
+  font-size: 24rpx;
+  color: #ddd;
+  flex-shrink: 0;
+}
+
+/* ==================== 内容区 ==================== */
+.body-content {
+  padding: 30rpx 36rpx;
+}
+
+/* 最近分析 */
+.recent-section {
+  margin-bottom: 36rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+
+.section-more {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.recent-list {
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.recent-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26rpx 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.recent-item:last-child {
+  border-bottom: none;
+}
+
+.recent-item:active {
+  background: #fafafa;
+}
+
+.recent-left {
+  flex: 1;
+}
+
+.recent-code {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-right: 16rpx;
+}
+
+.recent-name {
+  font-size: 26rpx;
+  color: #888;
+}
+
+.recent-arrow {
+  font-size: 24rpx;
+  color: #ddd;
+}
+
+/* ==================== 功能卡片 (2x2 网格) ==================== */
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.feat-item {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.04);
+}
+
+.feat-badge {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.feat-badge-text {
+  font-size: 22rpx;
+  font-weight: 800;
+  color: #fff;
+}
+
+.badge-blue { background: linear-gradient(135deg, #2980b9, #3498db); }
+.badge-red { background: linear-gradient(135deg, #c0392b, #e74c3c); }
+.badge-green { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+.badge-orange { background: linear-gradient(135deg, #e67e22, #f39c12); }
+
+.feat-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 6rpx;
+}
+
+.feat-desc {
+  display: block;
+  font-size: 22rpx;
+  color: #aaa;
+  line-height: 1.4;
+}
+
+/* ==================== 底部免责 ==================== */
+.footer {
+  padding: 20rpx 0 30rpx;
+}
+
+.disclaimer-box {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx 28rpx;
+  border-left: 6rpx solid #e0e0e0;
+}
+
+.disclaimer-title {
+  display: block;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.disclaimer-content {
+  display: block;
+  font-size: 22rpx;
+  color: #bbb;
+  line-height: 1.7;
+}

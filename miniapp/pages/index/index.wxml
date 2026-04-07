@@ -1,0 +1,105 @@
+<!-- 首页 -->
+<view class="page-wrap">
+  <!-- 搜索区域（视觉焦点） -->
+  <view class="search-hero">
+    <view class="brand-line">
+      <text class="brand-name">精准析查</text>
+      <text class="brand-dot">·</text>
+      <text class="brand-slogan">上市公司公开信息聚合查询</text>
+    </view>
+
+    <view class="search-box" bindtap="focusInput">
+      <view class="search-input-wrap {{inputFocus ? 'search-focus' : ''}}">
+        <view class="search-prefix">
+          <image class="search-icon-img" src="/images/search-active.png" mode="aspectFit" />
+        </view>
+        <input
+          id="searchInput"
+          class="search-input"
+          placeholder="股票代码 / 名称，如 600519"
+          placeholder-class="search-placeholder"
+          value="{{keyword}}"
+          bindinput="onInput"
+          bindfocus="onFocus"
+          bindblur="onBlur"
+          bindconfirm="onSearch"
+          confirm-type="search"
+          focus="{{inputFocus}}"
+        />
+        <view class="search-btn" bindtap="onSearch" wx:if="{{keyword}}">
+          <text class="search-btn-text">分析</text>
+        </view>
+        <view class="clear-icon" wx:if="{{keyword}}" catchtap="onClear">
+          <text class="clear-x">x</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 热门快捷 -->
+    <view class="hot-tags" wx:if="{{!keyword}}">
+      <view
+        class="hot-tag"
+        wx:for="{{hotStocks}}"
+        wx:key="code"
+        bindtap="onSelectStock"
+        data-code="{{item.code}}"
+        data-name="{{item.name}}"
+      >{{item.name}}</view>
+    </view>
+  </view>
+
+  <!-- 搜索建议（浮层） -->
+  <view class="suggest-mask" wx:if="{{suggestions.length > 0}}" bindtap="dismissSuggest"></view>
+  <view class="suggest-list" wx:if="{{suggestions.length > 0}}">
+    <view
+      class="suggest-item"
+      wx:for="{{suggestions}}"
+      wx:key="code"
+      bindtap="onSelectStock"
+      data-code="{{item.code}}"
+      data-name="{{item.name}}"
+    >
+      <text class="suggest-code">{{item.code}}</text>
+      <text class="suggest-name">{{item.name}}</text>
+      <text class="suggest-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 下方内容 -->
+  <view class="body-content">
+    <!-- 功能说明 -->
+    <view class="section-header">
+      <text class="section-title">功能说明</text>
+    </view>
+    <view class="features-grid">
+      <view class="feat-item">
+        <view class="feat-badge badge-blue"><text class="feat-badge-text">AI</text></view>
+        <text class="feat-label">智能摘要</text>
+        <text class="feat-desc">AI辅助整理公开信息</text>
+      </view>
+      <view class="feat-item">
+        <view class="feat-badge badge-red"><text class="feat-badge-text">14</text></view>
+        <text class="feat-label">多维数据</text>
+        <text class="feat-desc">财报/公告/新闻一站查询</text>
+      </view>
+      <view class="feat-item">
+        <view class="feat-badge badge-green"><text class="feat-badge-text">PE</text></view>
+        <text class="feat-label">估值参考</text>
+        <text class="feat-desc">PE/PB等公开指标展示</text>
+      </view>
+      <view class="feat-item">
+        <view class="feat-badge badge-orange"><text class="feat-badge-text">快</text></view>
+        <text class="feat-label">高效查询</text>
+        <text class="feat-desc">5000+个股信息聚合</text>
+      </view>
+    </view>
+
+    <!-- 免责声明 -->
+    <view class="footer">
+      <view class="disclaimer-box">
+        <text class="disclaimer-title">免责声明</text>
+        <text class="disclaimer-content">本小程序仅提供上市公司公开信息的聚合展示与AI辅助整理服务，所有数据来源于公开渠道。本工具不提供任何投资建议、荐股服务或收益承诺。AI生成内容可能存在偏差，仅供参考。用户据此做出的任何决策，风险自担。投资有风险，入市需谨慎。</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -780,3 +780,263 @@
 2026-04-02 15:11:26,664 INFO app.api.realtime: 实时行情刷新: 5496只股票
 2026-04-02 15:13:05,450 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
 2026-04-02 15:13:05,451 INFO app.api.analyze: [002304] AI分析完成
+2026-04-02 18:00:00,095 INFO app.tasks.valuation_updater: 开始估值更新: 2026-04-02
+2026-04-02 18:01:04,950 INFO app.tasks.valuation_updater: 估值更新完成: 2026-04-02, 成功62只, 跳过0只
+2026-04-03 09:00:00,195 INFO app.tasks.crawler: 开始爬取公告: 2026-04-02
+2026-04-03 09:00:03,217 INFO app.tasks.crawler: 业绩信号: 2026-04-02 共7条 (超预期0, 低于预期2)
+2026-04-03 09:00:03,218 INFO app.tasks.crawler: 公告保存完成: 2026-04-02, 共2380条
+2026-04-03 14:30:44,722 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (实时)
+2026-04-03 14:30:45,032 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-03 14:30:45,075 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 14:30:45,234 INFO app.utils.stock_data_collector: [002304] 基本信息: OK
+2026-04-03 14:30:45,244 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-03 14:30:45,393 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-03 14:30:45,468 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-03 14:30:45,561 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-03 14:30:46,070 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 118天
+2026-04-03 14:30:46,382 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-03 14:30:46,499 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-03 14:30:50,573 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-03 14:30:50,575 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-03 14:30:59,584 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-03 14:32:14,862 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-03 14:32:14,864 INFO app.api.analyze: [002304] AI分析完成
+2026-04-03 15:40:02,320 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (实时)
+2026-04-03 15:40:02,558 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-03 15:40:02,608 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-03 15:40:02,946 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 15:40:02,946 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 15:40:03,233 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-03 15:40:03,289 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-03 15:40:03,491 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 118天
+2026-04-03 15:40:04,934 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-03 15:40:05,623 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-03 15:40:05,666 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-03 15:40:08,482 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-03 15:40:08,484 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-03 15:40:08,484 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-03 15:40:22,579 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-03 15:41:16,360 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-03 15:41:16,361 INFO app.api.analyze: [002304] AI分析完成
+2026-04-03 16:39:13,009 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (实时)
+2026-04-03 16:39:13,280 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-03 16:39:13,467 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:39:13,569 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-03 16:39:13,797 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-03 16:39:13,851 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-03 16:39:13,852 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:39:14,180 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-03 16:39:14,193 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 118天
+2026-04-03 16:39:14,706 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-03 16:39:14,712 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-03 16:39:24,055 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-03 16:39:24,058 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-03 16:39:24,058 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-03 16:39:43,941 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-03 16:40:46,867 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-03 16:40:46,868 INFO app.api.analyze: [002304] AI分析完成
+2026-04-03 16:41:08,570 INFO app.utils.stock_data_collector: [002714] 实时行情: OK (实时)
+2026-04-03 16:41:08,671 INFO app.utils.stock_data_collector: [002714] 资金流向: OK, 10天
+2026-04-03 16:41:08,700 INFO app.utils.stock_data_collector: [002714] 新闻: OK, 10条
+2026-04-03 16:41:08,824 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-03 16:41:08,865 WARNING app.utils.stock_data_collector: [002714] 股东失败: No tables found
+2026-04-03 16:41:09,009 WARNING app.utils.stock_data_collector: [002714] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:41:09,164 WARNING app.utils.stock_data_collector: [002714] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:41:09,276 INFO app.utils.stock_data_collector: [002714] 财务摘要: OK, 7个指标
+2026-04-03 16:41:09,423 INFO app.utils.stock_data_collector: [002714] 分析师预测: OK, 3年
+2026-04-03 16:41:09,644 INFO app.utils.stock_data_collector: [002714] K线趋势: OK, 118天
+2026-04-03 16:41:09,946 INFO app.utils.stock_data_collector: [002714] 现金流: OK, 6期
+2026-04-03 16:41:10,065 INFO app.utils.stock_data_collector: [002714] 利润表: OK, 6期
+2026-04-03 16:41:11,047 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-03 16:41:13,179 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-03 16:41:14,970 INFO app.utils.stock_data_collector: [002714] 业绩预告: OK, 4条
+2026-04-03 16:41:14,973 INFO app.utils.stock_data_collector: [002714] 基本信息: 从本地缓存补全 (牧原股份)
+2026-04-03 16:41:14,974 INFO app.api.analyze: [002714] 数据采集完成，开始AI分析
+2026-04-03 16:41:43,504 INFO app.tasks.scheduler: 调度器已启动: 公告爬取(09:00), 估值更新(18:00)
+2026-04-03 16:41:43,508 INFO app.utils.stock_list_cache: 股票列表已从本地加载: 5497 只
+2026-04-03 16:41:44,251 INFO app.utils.stock_data_collector: [002714] 资金流向: OK, 10天
+2026-04-03 16:41:44,325 INFO app.utils.stock_data_collector: [002714] 新闻: OK, 10条
+2026-04-03 16:41:44,507 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-03 16:41:44,599 INFO app.utils.stock_data_collector: [002714] 财务摘要: OK, 7个指标
+2026-04-03 16:41:44,636 WARNING app.utils.stock_data_collector: [002714] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:41:44,636 WARNING app.utils.stock_data_collector: [002714] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:41:44,647 WARNING app.utils.stock_data_collector: [002714] 股东失败: No tables found
+2026-04-03 16:41:44,876 INFO app.utils.stock_data_collector: [002714] 分析师预测: OK, 3年
+2026-04-03 16:41:45,212 INFO app.utils.stock_data_collector: [002714] K线趋势: OK, 118天
+2026-04-03 16:41:45,681 INFO app.utils.stock_data_collector: [002714] 利润表: OK, 6期
+2026-04-03 16:41:46,173 INFO app.utils.stock_data_collector: [002714] 现金流: OK, 6期
+2026-04-03 16:41:46,700 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-03 16:41:48,833 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-03 16:41:49,604 INFO app.utils.stock_data_collector: [002714] 实时行情: OK (日K降级)
+2026-04-03 16:41:50,930 INFO app.utils.stock_data_collector: [002714] 业绩预告: OK, 4条
+2026-04-03 16:41:50,932 INFO app.utils.stock_data_collector: [002714] 基本信息: 从本地缓存补全 (牧原股份)
+2026-04-03 16:41:50,933 INFO app.api.analyze: [002714] 数据采集完成，开始AI分析
+2026-04-03 16:41:54,051 INFO app.utils.stock_list_cache: 股票列表已保存: 5497 只
+2026-04-03 16:41:54,052 INFO app.utils.stock_list_cache: 股票列表后台刷新完成: 5497 只
+2026-04-03 16:41:56,657 INFO app.utils.stock_data_collector: [002714] 新闻: OK, 10条
+2026-04-03 16:41:56,660 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-03 16:41:56,719 INFO app.utils.stock_data_collector: [002714] 资金流向: OK, 10天
+2026-04-03 16:41:57,058 WARNING app.utils.stock_data_collector: [002714] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:41:57,062 WARNING app.utils.stock_data_collector: [002714] 股东失败: No tables found
+2026-04-03 16:41:57,062 WARNING app.utils.stock_data_collector: [002714] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:41:57,229 INFO app.utils.stock_data_collector: [002714] 财务摘要: OK, 7个指标
+2026-04-03 16:41:57,309 INFO app.utils.stock_data_collector: [002714] 利润表: OK, 6期
+2026-04-03 16:41:57,397 INFO app.utils.stock_data_collector: [002714] 现金流: OK, 6期
+2026-04-03 16:41:57,413 INFO app.utils.stock_data_collector: [002714] 分析师预测: OK, 3年
+2026-04-03 16:41:57,591 INFO app.utils.stock_data_collector: [002714] K线趋势: OK, 118天
+2026-04-03 16:41:58,139 INFO app.utils.stock_data_collector: [002714] 实时行情: OK (日K降级)
+2026-04-03 16:41:58,801 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-03 16:42:00,936 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-03 16:42:04,420 INFO app.utils.stock_data_collector: [002714] 业绩预告: OK, 4条
+2026-04-03 16:42:04,422 INFO app.utils.stock_data_collector: [002714] 基本信息: 从本地缓存补全 (牧原股份)
+2026-04-03 16:42:04,422 INFO app.api.analyze: [002714] 数据采集完成，开始AI分析
+2026-04-03 16:42:08,715 INFO app.utils.stock_data_collector: [002714] 新闻: OK, 10条
+2026-04-03 16:42:08,773 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-03 16:42:09,133 WARNING app.utils.stock_data_collector: [002714] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:42:09,138 WARNING app.utils.stock_data_collector: [002714] 股东失败: No tables found
+2026-04-03 16:42:09,196 WARNING app.utils.stock_data_collector: [002714] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:42:09,197 INFO app.utils.stock_data_collector: [002714] 资金流向: OK, 10天
+2026-04-03 16:42:09,301 INFO app.utils.stock_data_collector: [002714] 财务摘要: OK, 7个指标
+2026-04-03 16:42:09,370 INFO app.utils.stock_data_collector: [002714] 利润表: OK, 6期
+2026-04-03 16:42:09,396 INFO app.utils.stock_data_collector: [002714] 现金流: OK, 6期
+2026-04-03 16:42:09,465 INFO app.utils.stock_data_collector: [002714] 分析师预测: OK, 3年
+2026-04-03 16:42:09,985 INFO app.utils.stock_data_collector: [002714] K线趋势: OK, 118天
+2026-04-03 16:42:10,908 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-03 16:42:13,063 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-03 16:42:13,589 INFO app.utils.stock_data_collector: [002714] 实时行情: OK (日K降级)
+2026-04-03 16:42:14,978 INFO app.utils.stock_data_collector: [002714] 业绩预告: OK, 4条
+2026-04-03 16:42:14,980 INFO app.utils.stock_data_collector: [002714] 基本信息: 从本地缓存补全 (牧原股份)
+2026-04-03 16:42:14,980 INFO app.api.analyze: [002714] 数据采集完成，开始AI分析
+2026-04-03 16:42:51,996 INFO app.utils.ai_analyzer: [002714] AI分析完成 (provider=qwen, model=qwen-plus)
+2026-04-03 16:42:51,996 INFO app.api.analyze: [002714] AI分析完成
+2026-04-03 16:43:10,051 INFO app.utils.stock_data_collector: [002714] 新闻: OK, 10条
+2026-04-03 16:43:10,083 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-03 16:43:10,089 WARNING app.utils.stock_data_collector: [002714] 股东失败: No tables found
+2026-04-03 16:43:10,123 INFO app.utils.stock_data_collector: [002714] 资金流向: OK, 10天
+2026-04-03 16:43:10,376 WARNING app.utils.stock_data_collector: [002714] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:43:10,563 WARNING app.utils.stock_data_collector: [002714] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:43:10,595 INFO app.utils.stock_data_collector: [002714] 利润表: OK, 6期
+2026-04-03 16:43:10,631 INFO app.utils.stock_data_collector: [002714] 现金流: OK, 6期
+2026-04-03 16:43:10,657 INFO app.utils.stock_data_collector: [002714] 分析师预测: OK, 3年
+2026-04-03 16:43:10,734 INFO app.utils.stock_data_collector: [002714] 财务摘要: OK, 7个指标
+2026-04-03 16:43:10,830 INFO app.utils.stock_data_collector: [002714] K线趋势: OK, 118天
+2026-04-03 16:43:12,242 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-03 16:43:12,702 INFO app.utils.ai_analyzer: [002714] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-03 16:43:12,702 INFO app.api.analyze: [002714] AI分析完成
+2026-04-03 16:43:14,383 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-03 16:43:14,929 INFO app.utils.stock_data_collector: [002714] 实时行情: OK (日K降级)
+2026-04-03 16:43:16,786 INFO app.utils.stock_data_collector: [002714] 业绩预告: OK, 4条
+2026-04-03 16:43:16,788 INFO app.utils.stock_data_collector: [002714] 基本信息: 从本地缓存补全 (牧原股份)
+2026-04-03 16:43:16,788 INFO app.api.analyze: [002714] 数据采集完成，开始AI分析
+2026-04-03 16:43:41,555 INFO app.utils.ai_analyzer: [002714] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-03 16:43:41,555 INFO app.api.analyze: [002714] AI分析完成
+2026-04-03 16:44:25,807 INFO app.utils.ai_analyzer: [002714] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-03 16:44:25,809 INFO app.api.analyze: [002714] AI分析完成
+2026-04-03 16:52:43,721 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-03 16:52:43,793 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-03 16:52:44,129 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:52:44,136 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-03 16:52:44,208 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:52:44,266 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-03 16:52:44,330 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-03 16:52:44,538 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (日K降级)
+2026-04-03 16:52:44,539 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 119天
+2026-04-03 16:52:44,766 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-03 16:52:45,083 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-03 16:52:49,890 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-03 16:52:49,893 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-03 16:52:49,893 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-03 16:52:57,387 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-03 16:52:57,392 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-03 16:52:57,927 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-03 16:52:57,957 WARNING app.utils.stock_data_collector: [002304] 业绩快报(20260331)失败: 'NoneType' object is not subscriptable
+2026-04-03 16:52:58,096 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-03 16:52:58,098 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-03 16:52:58,119 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-03 16:52:58,158 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-03 16:52:58,531 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 119天
+2026-04-03 16:52:58,532 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (日K降级)
+2026-04-03 16:52:58,888 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-03 16:53:04,650 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-03 16:53:04,652 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-03 16:53:04,652 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-03 16:53:08,929 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-03 16:53:43,897 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=qwen, model=qwen-plus)
+2026-04-03 16:53:43,897 INFO app.api.analyze: [002304] AI分析完成
+2026-04-03 16:53:59,903 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-03 16:53:59,904 INFO app.api.analyze: [002304] AI分析完成
+2026-04-03 18:00:00,029 INFO app.tasks.valuation_updater: 开始估值更新: 2026-04-03
+2026-04-03 18:00:53,607 INFO app.tasks.valuation_updater: 估值更新完成: 2026-04-03, 成功62只, 跳过0只
+2026-04-04 09:00:00,141 INFO app.tasks.crawler: 开始爬取公告: 2026-04-03
+2026-04-04 09:00:04,524 INFO app.tasks.crawler: 业绩信号: 2026-04-03 共17条 (超预期1, 低于预期5)
+2026-04-04 09:00:04,524 INFO app.tasks.crawler: 公告保存完成: 2026-04-03, 共3529条
+2026-04-04 18:00:00,092 INFO app.tasks.valuation_updater: 开始估值更新: 2026-04-04
+2026-04-04 18:00:46,936 INFO app.tasks.valuation_updater: 估值更新完成: 2026-04-04, 成功62只, 跳过0只
+2026-04-05 09:00:00,153 INFO app.tasks.crawler: 开始爬取公告: 2026-04-04
+2026-04-05 09:00:02,095 INFO app.tasks.crawler: 业绩信号: 2026-04-04 共12条 (超预期0, 低于预期2)
+2026-04-05 09:00:02,095 INFO app.tasks.crawler: 公告保存完成: 2026-04-04, 共1562条
+2026-04-05 18:00:00,096 INFO app.tasks.valuation_updater: 开始估值更新: 2026-04-05
+2026-04-05 18:00:45,547 INFO app.tasks.valuation_updater: 估值更新完成: 2026-04-05, 成功62只, 跳过0只
+2026-04-06 09:00:00,134 INFO app.tasks.crawler: 开始爬取公告: 2026-04-05
+2026-04-06 18:00:00,098 INFO app.tasks.valuation_updater: 开始估值更新: 2026-04-06
+2026-04-06 18:00:42,289 INFO app.tasks.valuation_updater: 估值更新完成: 2026-04-06, 成功62只, 跳过0只
+2026-04-07 09:00:00,145 INFO app.tasks.crawler: 开始爬取公告: 2026-04-06
+2026-04-07 09:00:00,386 INFO app.tasks.crawler: 公告保存完成: 2026-04-06, 共2条
+2026-04-07 09:30:12,574 INFO app.utils.stock_data_collector: [002714] 实时行情: OK (实时)
+2026-04-07 09:30:12,839 INFO app.utils.stock_data_collector: [002714] 新闻: OK, 10条
+2026-04-07 09:30:12,887 INFO app.utils.stock_data_collector: [002714] 基本信息: OK
+2026-04-07 09:30:13,105 INFO app.utils.stock_data_collector: [002714] 资金流向: OK, 10天
+2026-04-07 09:30:13,394 INFO app.utils.stock_data_collector: [002714] 股东: OK, 截止2025-12-31, 11位
+2026-04-07 09:30:13,442 INFO app.utils.stock_data_collector: [002714] 财务摘要: OK, 7个指标
+2026-04-07 09:30:13,468 INFO app.utils.stock_data_collector: [002714] 分析师预测: OK, 3年
+2026-04-07 09:30:13,853 INFO app.utils.stock_data_collector: [002714] 利润表: OK, 6期
+2026-04-07 09:30:13,927 INFO app.utils.stock_data_collector: [002714] 现金流: OK, 6期
+2026-04-07 09:30:14,863 INFO app.utils.stock_data_collector: [002714] K线趋势: OK, 119天
+2026-04-07 09:30:19,980 INFO app.utils.stock_data_collector: [002714] 业绩预告: OK, 4条
+2026-04-07 09:30:19,983 INFO app.api.analyze: [002714] 数据采集完成，开始AI分析
+2026-04-07 09:30:30,909 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-07 09:31:45,586 INFO app.utils.ai_analyzer: [002714] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-07 09:31:45,587 INFO app.api.analyze: [002714] AI分析完成
+2026-04-07 14:09:22,736 INFO app.utils.stock_data_collector: [002304] 实时行情: OK (实时)
+2026-04-07 14:09:22,889 INFO app.utils.stock_data_collector: [002304] 资金流向: OK, 10天
+2026-04-07 14:09:23,036 INFO app.utils.stock_data_collector: [002304] 新闻: OK, 10条
+2026-04-07 14:09:23,156 WARNING app.utils.stock_data_collector: [002304] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-07 14:09:23,414 INFO app.utils.stock_data_collector: [002304] 股东: OK, 截止2025-09-30, 10位
+2026-04-07 14:09:23,522 INFO app.utils.stock_data_collector: [002304] 财务摘要: OK, 7个指标
+2026-04-07 14:09:23,673 INFO app.utils.stock_data_collector: [002304] 分析师预测: OK, 3年
+2026-04-07 14:09:24,208 INFO app.utils.stock_data_collector: [002304] K线趋势: OK, 119天
+2026-04-07 14:09:24,534 INFO app.utils.stock_data_collector: [002304] 现金流: OK, 6期
+2026-04-07 14:09:24,835 INFO app.utils.stock_data_collector: [002304] 利润表: OK, 6期
+2026-04-07 14:09:29,577 INFO app.utils.stock_data_collector: [002304] 业绩预告: OK, 3条
+2026-04-07 14:09:29,580 INFO app.utils.stock_data_collector: [002304] 基本信息: 从本地缓存补全 (洋河股份)
+2026-04-07 14:09:29,580 INFO app.api.analyze: [002304] 数据采集完成，开始AI分析
+2026-04-07 14:09:41,656 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-07 14:10:58,326 INFO app.utils.ai_analyzer: [002304] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-07 14:10:58,326 INFO app.api.analyze: [002304] AI分析完成
+2026-04-07 14:42:33,830 INFO app.api.realtime: 实时行情刷新: 5496只股票
+2026-04-07 14:44:29,465 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-07 14:44:31,602 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-07 14:44:33,761 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-07 14:47:51,234 INFO app.utils.stock_data_collector: [600519] 实时行情: OK (实时)
+2026-04-07 14:47:51,457 INFO app.utils.stock_data_collector: [600519] 新闻: OK, 10条
+2026-04-07 14:47:51,623 INFO app.utils.stock_data_collector: [600519] 资金流向: OK, 10天
+2026-04-07 14:47:51,836 INFO app.utils.stock_data_collector: [600519] 股东: OK, 截止2025-11-19, 10位
+2026-04-07 14:47:51,988 WARNING app.utils.stock_data_collector: [600519] 基本信息失败: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2026-04-07 14:47:52,166 INFO app.utils.stock_data_collector: [600519] 财务摘要: OK, 7个指标
+2026-04-07 14:47:52,208 INFO app.utils.stock_data_collector: [600519] 分析师预测: OK, 3年
+2026-04-07 14:47:52,339 INFO app.utils.stock_data_collector: [600519] K线趋势: OK, 119天
+2026-04-07 14:47:53,030 INFO app.utils.stock_data_collector: [600519] 利润表: OK, 6期
+2026-04-07 14:47:53,041 INFO app.utils.stock_data_collector: [600519] 现金流: OK, 6期
+2026-04-07 14:47:58,816 INFO app.utils.stock_data_collector: [600519] 基本信息: 从本地缓存补全 (贵州茅台)
+2026-04-07 14:47:58,816 INFO app.api.analyze: [600519] 数据采集完成，开始AI分析
+2026-04-07 14:48:08,083 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-07 14:48:23,991 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-07 14:48:26,133 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-07 14:48:56,896 INFO app.utils.ai_analyzer: [600519] AI分析完成 (provider=doubao, model=doubao-seed-2-0-pro-260215)
+2026-04-07 14:48:56,896 INFO app.api.analyze: [600519] AI分析完成
+2026-04-07 14:49:21,312 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-07 14:49:23,567 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-07 14:49:25,709 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'
+2026-04-07 14:49:37,176 WARNING app.api.realtime: 实时行情获取失败(第1次): Can not decode value starting with character '<'
+2026-04-07 14:49:39,343 WARNING app.api.realtime: 实时行情获取失败(第2次): Can not decode value starting with character '<'
+2026-04-07 14:49:41,540 WARNING app.api.realtime: 实时行情获取失败(第3次): Can not decode value starting with character '<'

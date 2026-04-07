@@ -1,0 +1,37 @@
+<!-- 搜索历史页 -->
+<view class="container">
+  <view class="header">
+    <text class="page-title">搜索记录</text>
+    <text class="clear-btn" bindtap="onClear" wx:if="{{list.length > 0}}">清空</text>
+  </view>
+
+  <!-- 历史列表 -->
+  <view class="history-list" wx:if="{{list.length > 0}}">
+    <view
+      class="history-item"
+      wx:for="{{list}}"
+      wx:key="index"
+      bindtap="onTap"
+      data-code="{{item.code}}"
+      data-name="{{item.name}}"
+    >
+      <view class="item-left">
+        <text class="item-code">{{item.code}}</text>
+        <text class="item-name">{{item.name}}</text>
+      </view>
+      <view class="item-right">
+        <text class="item-price" wx:if="{{item.price}}">{{item.price}}</text>
+        <text class="item-time">{{item.time}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && list.length === 0}}">
+    <view class="empty-icon-wrap">
+      <image class="empty-icon-img" src="/images/search.png" mode="aspectFit" />
+    </view>
+    <text class="empty-text">暂无搜索记录</text>
+    <text class="empty-hint">在首页搜索股票代码开始分析</text>
+  </view>
+</view>

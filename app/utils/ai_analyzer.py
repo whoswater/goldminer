@@ -25,7 +25,7 @@ AI_PROVIDERS = {
     },
     'qwen': {
         'name': '通义千问',
-        'api_key': os.environ.get('QWEN_API_KEY', ''),
+        'api_key': os.environ.get('QWEN_API_KEY', 'sk-2f751030ea294532a8fae8e7dcc7e2e0'),
         'base_url': os.environ.get('QWEN_BASE_URL', 'https://dashscope.aliyuncs.com/compatible-mode/v1'),
         'model': os.environ.get('QWEN_MODEL', 'qwen-plus'),
         'sdk': 'openai',

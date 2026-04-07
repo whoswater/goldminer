@@ -1,0 +1,288 @@
+<!-- 分析结果页 -->
+<view class="container">
+  <!-- 加载中 -->
+  <view class="card" wx:if="{{loading}}">
+    <view class="loading-box">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">{{statusText}}</text>
+      <view class="progress-steps">
+        <view class="step {{step >= 1 ? 'step-done' : ''}}">数据采集</view>
+        <view class="step-arrow">/</view>
+        <view class="step {{step >= 2 ? 'step-done' : ''}}">AI分析</view>
+        <view class="step-arrow">/</view>
+        <view class="step {{step >= 3 ? 'step-done' : ''}}">完成</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 错误状态 -->
+  <view class="card" wx:if="{{error}}">
+    <view class="empty-state">
+      <text class="error-text">{{error}}</text>
+      <button class="retry-btn" bindtap="retry">重试</button>
+    </view>
+  </view>
+
+  <!-- ========== 股票头部 ========== -->
+  <view class="stock-hero" wx:if="{{stockInfo}}">
+    <view class="hero-top">
+      <view class="hero-left">
+        <text class="stock-name">{{stockInfo.name || stockName}}</text>
+        <view class="hero-tags">
+          <text class="code-tag">{{stockCode}}</text>
+          <text class="industry-tag" wx:if="{{stockInfo.industry}}">{{stockInfo.industry}}</text>
+        </view>
+      </view>
+      <view class="hero-right" wx:if="{{stockInfo.price}}">
+        <text class="price-main {{priceClass}}">{{stockInfo.price}}</text>
+        <text class="price-change {{priceClass}}">{{stockInfo.changeStr}}</text>
+      </view>
+    </view>
+    <!-- 指标行 -->
+    <view class="metrics-row" wx:if="{{stockInfo.metrics.length > 0}}">
+      <view class="metric-chip" wx:for="{{stockInfo.metrics}}" wx:key="label">
+        <text class="metric-val">{{item.value}}</text>
+        <text class="metric-lbl">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 行情概览 ========== -->
+  <view class="card" wx:if="{{quoteDetail}}">
+    <view class="card-title">行情概览</view>
+    <view class="quote-grid">
+      <view class="quote-item">
+        <text class="quote-val">{{quoteDetail.open}}</text>
+        <text class="quote-lbl">今开</text>
+      </view>
+      <view class="quote-item">
+        <text class="quote-val text-rise">{{quoteDetail.high}}</text>
+        <text class="quote-lbl">最高</text>
+      </view>
+      <view class="quote-item">
+        <text class="quote-val text-fall">{{quoteDetail.low}}</text>
+        <text class="quote-lbl">最低</text>
+      </view>
+      <view class="quote-item">
+        <text class="quote-val">{{quoteDetail.prevClose}}</text>
+        <text class="quote-lbl">昨收</text>
+      </view>
+      <view class="quote-item">
+        <text class="quote-val">{{quoteDetail.volume}}</text>
+        <text class="quote-lbl">成交量</text>
+      </view>
+      <view class="quote-item">
+        <text class="quote-val">{{quoteDetail.amount}}</text>
+        <text class="quote-lbl">成交额</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== K线趋势 ========== -->
+  <view class="card" wx:if="{{klineTrend}}">
+    <view class="card-title">走势概览</view>
+    <view class="trend-grid">
+      <view class="trend-item">
+        <text class="trend-val {{klineTrend.c30cls}}">{{klineTrend.change30d}}</text>
+        <text class="trend-lbl">近30日</text>
+      </view>
+      <view class="trend-item">
+        <text class="trend-val {{klineTrend.c90cls}}">{{klineTrend.change90d}}</text>
+        <text class="trend-lbl">近90日</text>
+      </view>
+      <view class="trend-item">
+        <text class="trend-val">{{klineTrend.high180}}</text>
+        <text class="trend-lbl">180日高</text>
+      </view>
+      <view class="trend-item">
+        <text class="trend-val">{{klineTrend.low180}}</text>
+        <text class="trend-lbl">180日低</text>
+      </view>
+      <view class="trend-item">
+        <text class="trend-val">{{klineTrend.ma20}}</text>
+        <text class="trend-lbl">MA20</text>
+      </view>
+      <view class="trend-item">
+        <text class="trend-val">{{klineTrend.ma60}}</text>
+        <text class="trend-lbl">MA60</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== AI信息摘要 ========== -->
+  <view class="card ai-card" wx:if="{{aiResult}}">
+    <view class="card-title">AI 信息摘要</view>
+    <view class="ai-note">以下内容由AI根据公开信息整理生成，可能存在偏差，仅供参考</view>
+
+    <view class="verdict-box">
+      <text class="verdict-label">业绩情况：</text>
+      <text class="tag {{verdictCls}}">{{aiResult.verdict}}</text>
+    </view>
+
+    <view class="ai-summary" wx:if="{{aiResult.summary}}">
+      <text>{{aiResult.summary}}</text>
+    </view>
+
+    <view class="ai-section" wx:if="{{aiResult.analysis}}">
+      <text class="ai-section-title">信息解读</text>
+      <text class="ai-section-content">{{aiResult.analysis}}</text>
+    </view>
+
+    <view class="ai-section" wx:if="{{aiResult.key_factors.length > 0}}">
+      <text class="ai-section-title">关键信息</text>
+      <view class="factor-list">
+        <view class="factor-item" wx:for="{{aiResult.key_factors}}" wx:key="*this">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="ai-section" wx:if="{{aiResult.risks.length > 0}}">
+      <text class="ai-section-title">风险因素</text>
+      <view class="risk-list">
+        <view class="risk-item" wx:for="{{aiResult.risks}}" wx:key="*this">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="ai-section" wx:if="{{aiResult.recommendation}}">
+      <text class="ai-section-title">综合概述</text>
+      <text class="ai-section-content">{{aiResult.recommendation}}</text>
+    </view>
+  </view>
+
+  <!-- ========== 财务数据 ========== -->
+  <view class="card" wx:if="{{financials.length > 0}}">
+    <view class="card-title">财务摘要</view>
+    <view class="fin-list">
+      <view class="fin-row" wx:for="{{financials}}" wx:key="label">
+        <text class="fin-label">{{item.label}}</text>
+        <text class="fin-value {{item.cls}}">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 业绩预告 ========== -->
+  <view class="card" wx:if="{{earningsForecast}}">
+    <view class="card-title">业绩预告</view>
+    <view class="earnings-box" wx:for="{{earningsForecast}}" wx:key="index">
+      <view class="earnings-header">
+        <text class="tag {{item.typeCls}}">{{item.forecast_type}}</text>
+        <text class="earnings-period">{{item.period}}</text>
+      </view>
+      <text class="earnings-desc" wx:if="{{item.change_desc}}">{{item.change_desc}}</text>
+      <view class="earnings-detail" wx:if="{{item.change_pct}}">
+        <text>变动幅度：</text>
+        <text class="{{item.changeCls}}">{{item.change_pct}}%</text>
+      </view>
+      <text class="earnings-reason" wx:if="{{item.change_reason}}">{{item.change_reason}}</text>
+    </view>
+  </view>
+
+  <!-- ========== 业绩快报 ========== -->
+  <view class="card" wx:if="{{earningsExpress.length > 0}}">
+    <view class="card-title">业绩快报</view>
+    <view class="fin-list">
+      <view class="fin-row" wx:for="{{earningsExpress}}" wx:key="label">
+        <text class="fin-label">{{item.label}}</text>
+        <text class="fin-value {{item.cls}}">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 分析师预测 ========== -->
+  <view class="card" wx:if="{{analystForecast.length > 0}}">
+    <view class="card-title">分析师预测（EPS）</view>
+    <view class="analyst-list">
+      <view class="analyst-header">
+        <text class="analyst-cell">年度</text>
+        <text class="analyst-cell">机构数</text>
+        <text class="analyst-cell">均值</text>
+        <text class="analyst-cell">范围</text>
+      </view>
+      <view class="analyst-row" wx:for="{{analystForecast}}" wx:key="year">
+        <text class="analyst-cell">{{item.year}}</text>
+        <text class="analyst-cell analyst-count">{{item.count}}家</text>
+        <text class="analyst-cell analyst-mean">{{item.mean}}</text>
+        <text class="analyst-cell analyst-range">{{item.min}}~{{item.max}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 主力资金 ========== -->
+  <view class="card" wx:if="{{fundFlow}}">
+    <view class="card-title">主力资金（近{{fundFlow.dayCount}}日）</view>
+    <view class="fund-summary">
+      <text class="fund-total-label">主力净流入合计：</text>
+      <text class="fund-total-val {{fundFlow.totalCls}}">{{fundFlow.totalStr}}</text>
+    </view>
+    <view class="fund-table">
+      <view class="fund-header">
+        <text class="fund-cell">日期</text>
+        <text class="fund-cell">涨跌</text>
+        <text class="fund-cell">主力净流入</text>
+      </view>
+      <view class="fund-row" wx:for="{{fundFlow.days}}" wx:key="date">
+        <text class="fund-cell">{{item.dateShort}}</text>
+        <text class="fund-cell {{item.pctCls}}">{{item.pctStr}}</text>
+        <text class="fund-cell {{item.mainCls}}">{{item.mainStr}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 十大流通股东 ========== -->
+  <view class="card" wx:if="{{topHolders}}">
+    <view class="card-title">十大流通股东 <text class="card-sub">截至 {{topHolders.date}}</text></view>
+    <view class="holder-list">
+      <view class="holder-row" wx:for="{{topHolders.list}}" wx:key="index">
+        <text class="holder-rank">{{index + 1}}</text>
+        <view class="holder-info">
+          <text class="holder-name">{{item.name}}</text>
+          <text class="holder-detail">{{item.sharesStr}} 股 · 占比 {{item.pct}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 新闻 ========== -->
+  <view class="card" wx:if="{{news.length > 0}}">
+    <view class="card-title">相关新闻</view>
+    <view class="news-list">
+      <view class="news-item" wx:for="{{news}}" wx:key="index">
+        <text class="news-title">{{item.title}}</text>
+        <view class="news-meta">
+          <text class="news-source" wx:if="{{item.source}}">{{item.source}}</text>
+          <text class="news-time">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 公告 ========== -->
+  <view class="card" wx:if="{{announcements.length > 0}}">
+    <view class="card-title">近期公告</view>
+    <view class="news-list">
+      <view class="news-item" wx:for="{{announcements}}" wx:key="index">
+        <text class="news-title">{{item.title}}</text>
+        <text class="news-time">{{item.date}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 估值参考 ========== -->
+  <view class="card" wx:if="{{valuation}}">
+    <view class="card-title">估值参考</view>
+    <view class="fin-list">
+      <view class="fin-row" wx:for="{{valuation}}" wx:key="label">
+        <text class="fin-label">{{item.label}}</text>
+        <text class="fin-value">{{item.value}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 免责声明 ========== -->
+  <view class="disclaimer">
+    <text>免责声明：本页面展示的所有信息均来源于上市公司公开披露数据及公开新闻，AI生成内容仅为信息整理，可能存在偏差或遗漏。本工具不提供任何投资建议、荐股服务或收益承诺，不对信息的准确性、完整性作任何保证。用户据此做出的任何决策与本平台无关，风险自担。股市有风险，入市需谨慎。</text>
+  </view>
+</view>
