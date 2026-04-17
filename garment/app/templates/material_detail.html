@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex align-items-center mb-4">
+    <a href="{{ url_for('material.list_materials') }}" class="btn btn-sm btn-outline-secondary me-3">返回列表</a>
+    <h4 class="mb-0">拿料详情 {{ material.code }}</h4>
+    <span class="status-badge status-{{ material.status }} ms-3">{{ material.status }}</span>
+</div>
+
+<!-- Basic info -->
+<div class="card">
+    <div class="card-header bg-white">基本信息</div>
+    <div class="card-body">
+        <div class="row mb-2">
+            <div class="col-md-3"><strong>总包方：</strong>{{ material.contractor_name }}</div>
+            <div class="col-md-3"><strong>拿料日期：</strong>{{ material.pickup_date }}</div>
+            <div class="col-md-2"><strong>总数量：</strong>{{ material.total_qty or 0 }} 件</div>
+            <div class="col-md-4"><strong>备注：</strong>{{ material.notes or '-' }}</div>
+        </div>
+        {% if material.contact_person or material.contact_info %}
+        <div class="row mb-2">
+            <div class="col-md-3"><strong>联系人：</strong>{{ material.contact_person or '-' }}</div>
+            <div class="col-md-3"><strong>联系方式：</strong>{{ material.contact_info or '-' }}</div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Item list -->
+<div class="card">
+    <div class="card-header bg-white">衣物明细</div>
+    <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+            <thead class="table-light"><tr><th>款式</th><th>尺码</th><th>数量</th></tr></thead>
+            <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.style_name }}</td>
+                <td>{{ item.size or '-' }}</td>
+                <td>{{ item.quantity }} 件</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if not proc_details %}
+<div class="card">
+    <div class="card-body text-center text-muted py-4">暂无加工记录</div>
+</div>
+{% endif %}
+
+{% for pd in proc_details %}
+<div class="card">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <span>加工批次 #{{ pd.proc.id }}</span>
+        <span class="status-badge status-{{ pd.proc.status }}">{{ pd.proc.status }}</span>
+    </div>
+    <div class="card-body p-0">
+        <!-- Flow steps timeline -->
+        <div class="p-3">
+            <h6 class="text-muted mb-3">制衣流程</h6>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+                {% for s in pd.steps %}
+                <div class="border rounded p-2 {{ 'bg-success-subtle border-success' if s.complete_date else 'bg-light' }}" style="min-width:140px">
+                    <div class="fw-bold">{{ s.step_order }}. {{ s.step_name }}
+                        {% if s.complete_date %}<span class="text-success">✓</span>{% endif %}
+                    </div>
+                    {% if s.complete_date %}
+                    <small class="text-muted">
+                        {{ s.worker_name or '' }} | {{ s.quantity }}件<br>
+                        {{ s.complete_date }}
+                    </small>
+                    {% else %}
+                    <small class="text-muted">待处理</small>
+                    {% endif %}
+                </div>
+                {% if not loop.last %}<div class="d-flex align-items-center text-muted">→</div>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Return + QC + Rework chain -->
+        {% if pd.qc_chain %}
+        <div class="border-top p-3">
+            <h6 class="text-muted mb-3">送回 / 质检 / 返工</h6>
+            <table class="table table-sm mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>送回日期</th><th>送回量</th><th>送回人</th><th>备注</th>
+                        <th>质检结果</th><th>质检日期</th><th>不合格详情</th>
+                        <th>返工</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in pd.qc_chain %}
+                <tr>
+                    <td>{{ item.return.return_date }}</td>
+                    <td>{{ item.return.quantity }}件</td>
+                    <td>{{ item.return.worker_name or '-' }}</td>
+                    <td>{{ item.return.notes or '-' }}</td>
+                    {% if item.qc %}
+                    <td><span class="status-badge status-{{ item.qc.result }}">{{ item.qc.result }}</span></td>
+                    <td>{{ item.qc.qc_date }}</td>
+                    <td>{% if item.qc.result == '不合格' %}{{ item.qc.reject_quantity }}件 / {{ item.qc.reject_reason }}{% else %}-{% endif %}</td>
+                    <td>
+                        {% if item.rework %}
+                        <span class="status-badge status-{{ item.rework.status }}">{{ item.rework.status }}</span>
+                        {% if item.rework.worker_name %}<br><small>{{ item.rework.worker_name }} | {{ item.rework.quantity }}件 | {{ item.rework.complete_date or '' }}</small>{% endif %}
+                        {% else %}-{% endif %}
+                    </td>
+                    {% else %}
+                    <td colspan="4" class="text-muted">待质检</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

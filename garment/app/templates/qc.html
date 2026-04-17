@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-4">质检与返工</h4>
+
+<!-- Add QC -->
+<div class="card">
+    <div class="card-header bg-white">新增质检记录</div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('qc.add_qc') }}">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label required">关联送回记录</label>
+                    <select name="return_id" class="form-select" required id="returnSelect">
+                        <option value="">请选择（未质检的送回记录）</option>
+                        {% for r in pending_returns %}
+                        <option value="{{ r.id }}" data-qty="{{ r.quantity }}">
+                            #{{ r.id }} | {{ r.contractor_name }} | {{ r.items_desc or '' }} | {{ r.quantity }}件 | {{ r.return_date }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label required">质检结果</label>
+                    <select name="result" class="form-select" required id="qcResult">
+                        <option value="">请选择</option>
+                        <option value="合格">合格</option>
+                        <option value="不合格">不合格</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label required">质检日期</label>
+                    <input type="date" name="qc_date" class="form-control" value="{{ today }}" max="{{ today }}" required>
+                </div>
+                <div class="col-md-2" id="rejectQtyDiv" style="display:none">
+                    <label class="form-label">不合格数量</label>
+                    <input type="number" name="reject_quantity" class="form-control" id="rejectQty" min="1">
+                </div>
+                <div class="col-md-2" id="rejectReasonDiv" style="display:none">
+                    <label class="form-label">不合格原因</label>
+                    <select name="reject_reason" class="form-select">
+                        <option value="">请选择</option>
+                        <option value="缝制不合格">缝制不合格</option>
+                        <option value="线头未剪干净">线头未剪干净</option>
+                        <option value="打包破损">打包破损</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary w-100" type="submit">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="card">
+    <div class="card-body">
+        <form method="GET" class="row g-2 align-items-end">
+            <div class="col-auto">
+                <select name="result" class="form-select form-select-sm">
+                    <option value="">全部结果</option>
+                    <option value="合格" {{ 'selected' if result_filter == '合格' }}>合格</option>
+                    <option value="不合格" {{ 'selected' if result_filter == '不合格' }}>不合格</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <select name="rework_status" class="form-select form-select-sm">
+                    <option value="">全部返工状态</option>
+                    <option value="待返工" {{ 'selected' if rework_filter == '待返工' }}>待返工</option>
+                    <option value="返工完成" {{ 'selected' if rework_filter == '返工完成' }}>返工完成</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-sm btn-outline-primary" type="submit">筛选</button>
+                <a href="{{ url_for('qc.list_qc') }}" class="btn btn-sm btn-outline-secondary">清除</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- QC Records -->
+<div class="card">
+    <div class="card-header bg-white">质检记录</div>
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr><th>编号</th><th>总包方</th><th>衣物明细</th><th>送回量</th><th>质检结果</th><th>质检日期</th><th>不合格数/原因</th></tr>
+            </thead>
+            <tbody>
+            {% for q in qc_records %}
+            <tr>
+                <td>{{ q.id }}</td>
+                <td>{{ q.contractor_name }}</td>
+                <td><small>{{ q.items_desc or '-' }}</small></td>
+                <td>{{ q.return_qty }}</td>
+                <td><span class="status-badge status-{{ q.result }}">{{ q.result }}</span></td>
+                <td>{{ q.qc_date }}</td>
+                <td>{% if q.result == '不合格' %}{{ q.reject_quantity }}件 / {{ q.reject_reason }}{% else %}-{% endif %}</td>
+            </tr>
+            {% endfor %}
+            {% if not qc_records %}
+            <tr><td colspan="7" class="text-center text-muted py-4">暂无质检记录</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Rework Records -->
+<div class="card">
+    <div class="card-header bg-white">返工记录</div>
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr><th>编号</th><th>总包方</th><th>衣物明细</th><th>不合格原因</th><th>数量</th><th>负责工人</th><th>完成日期</th><th>状态</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+            {% for rw in rework_records %}
+            <tr>
+                <td>{{ rw.id }}</td>
+                <td>{{ rw.contractor_name }}</td>
+                <td><small>{{ rw.items_desc or '-' }}</small></td>
+                <td>{{ rw.reject_reason }}</td>
+                <td>{{ rw.quantity }}</td>
+                <td>{{ rw.worker_name or '-' }}</td>
+                <td>{{ rw.complete_date or '-' }}</td>
+                <td><span class="status-badge status-{{ rw.status }}">{{ rw.status }}</span></td>
+                <td>
+                    {% if rw.status == '待返工' %}
+                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#rework{{ rw.id }}">处理返工</button>
+                    {% elif rw.status == '返工完成' %}
+                    <form method="POST" action="{{ url_for('qc.resend_rework', id=rw.id) }}" class="d-inline">
+                        <button class="btn btn-sm btn-success" type="submit">重新送回</button>
+                    </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% if rw.status == '待返工' %}
+            <div class="modal fade" id="rework{{ rw.id }}" tabindex="-1">
+                <div class="modal-dialog"><div class="modal-content">
+                    <form method="POST" action="{{ url_for('qc.handle_rework', id=rw.id) }}">
+                        <div class="modal-header"><h5 class="modal-title">处理返工 #{{ rw.id }}</h5></div>
+                        <div class="modal-body">
+                            <p>不合格原因：{{ rw.reject_reason }} | 数量：{{ rw.reject_quantity }}件</p>
+                            <div class="mb-2">
+                                <label class="form-label">负责工人</label>
+                                <select name="worker_id" class="form-select">
+                                    <option value="">选择工人</option>
+                                    {% for w in workers %}<option value="{{ w.id }}">{{ w.name }}</option>{% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">返工数量</label>
+                                <input type="number" name="quantity" class="form-control" value="{{ rw.quantity }}" min="1" required>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">完成日期</label>
+                                <input type="date" name="complete_date" class="form-control" value="{{ today }}" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </form>
+                </div></div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% if not rework_records %}
+            <tr><td colspan="9" class="text-center text-muted py-4">暂无返工记录</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('qcResult').addEventListener('change', function() {
+    var show = this.value === '不合格';
+    document.getElementById('rejectQtyDiv').style.display = show ? '' : 'none';
+    document.getElementById('rejectReasonDiv').style.display = show ? '' : 'none';
+    if (show) {
+        var opt = document.getElementById('returnSelect').options[document.getElementById('returnSelect').selectedIndex];
+        if (opt.dataset.qty) document.getElementById('rejectQty').value = opt.dataset.qty;
+    }
+});
+</script>
+{% endblock %}

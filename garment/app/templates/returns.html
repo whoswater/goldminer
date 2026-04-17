@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-4">送回记录</h4>
+
+<!-- Add form -->
+<div class="card">
+    <div class="card-header bg-white">新增送回记录</div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('returns.add_return') }}">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label required">关联加工记录（已完成）</label>
+                    <select name="processing_id" class="form-select" required id="procSelect">
+                        <option value="">请选择</option>
+                        {% for p in completed %}
+                        <option value="{{ p.id }}" data-qty="{{ p.batch_qty }}">
+                            #{{ p.id }} | {{ p.contractor_name }} | {{ p.items_desc or '' }} | 批次{{ p.batch_qty }}件
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label required">送回数量</label>
+                    <input type="number" name="quantity" class="form-control" id="returnQty" min="1" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label required">送回日期</label>
+                    <input type="date" name="return_date" class="form-control" value="{{ today }}" max="{{ today }}" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">送回人</label>
+                    <select name="worker_id" class="form-select">
+                        <option value="">选择工人</option>
+                        {% for w in workers %}<option value="{{ w.id }}">{{ w.name }}</option>{% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">备注</label>
+                    <input type="text" name="notes" class="form-control">
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-primary w-100" type="submit">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Filter -->
+<div class="card">
+    <div class="card-body">
+        <form method="GET" class="row g-2 align-items-end">
+            <div class="col-auto">
+                <select name="contractor_id" class="form-select form-select-sm">
+                    <option value="">全部总包方</option>
+                    {% for c in contractors %}
+                    <option value="{{ c.id }}" {{ 'selected' if contractor_filter == c.id|string }}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-sm btn-outline-primary" type="submit">筛选</button>
+                <a href="{{ url_for('returns.list_returns') }}" class="btn btn-sm btn-outline-secondary">清除</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Records -->
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr><th>编号</th><th>总包方</th><th>衣物明细</th><th>送回数量</th><th>送回日期</th><th>送回人</th><th>备注</th><th>操作</th></tr>
+            </thead>
+            <tbody>
+            {% for r in records %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.contractor_name }}</td>
+                <td><small>{{ r.items_desc or '-' }}</small></td>
+                <td>{{ r.quantity }}</td>
+                <td>{{ r.return_date }}</td>
+                <td>{{ r.worker_name or '-' }}</td>
+                <td>{{ r.notes }}</td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editReturn{{ r.id }}">修改</button>
+                    <form method="POST" action="{{ url_for('returns.delete_return', id=r.id) }}" class="d-inline">
+                        <button class="btn btn-sm btn-outline-danger btn-delete" type="submit">删除</button>
+                    </form>
+                </td>
+            </tr>
+            <div class="modal fade" id="editReturn{{ r.id }}" tabindex="-1">
+                <div class="modal-dialog"><div class="modal-content">
+                    <form method="POST" action="{{ url_for('returns.edit_return', id=r.id) }}">
+                        <div class="modal-header"><h5 class="modal-title">修改送回记录</h5></div>
+                        <div class="modal-body">
+                            <div class="mb-2">
+                                <label class="form-label">送回数量</label>
+                                <input type="number" name="quantity" class="form-control" value="{{ r.quantity }}" min="1" required>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">送回日期</label>
+                                <input type="date" name="return_date" class="form-control" value="{{ r.return_date }}" required>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">送回人</label>
+                                <select name="worker_id" class="form-select">
+                                    <option value="">选择工人</option>
+                                    {% for w in workers %}<option value="{{ w.id }}" {{ 'selected' if w.id == r.worker_id }}>{{ w.name }}</option>{% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label">备注</label>
+                                <input type="text" name="notes" class="form-control" value="{{ r.notes }}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-primary">保存修改</button>
+                        </div>
+                    </form>
+                </div></div>
+            </div>
+            {% endfor %}
+            {% if not records %}
+            <tr><td colspan="8" class="text-center text-muted py-4">暂无送回记录</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('procSelect').addEventListener('change', function() {
+    var opt = this.options[this.selectedIndex];
+    var qty = opt.dataset.qty;
+    if (qty) document.getElementById('returnQty').value = qty;
+});
+</script>
+{% endblock %}

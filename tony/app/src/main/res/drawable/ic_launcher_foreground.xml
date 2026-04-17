@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Scissors icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,42 C40,35.4 34.6,30 28,30 C21.4,30 16,35.4 16,42 C16,48.6 21.4,54 28,54 C30.8,54 33.4,53 35.4,51.4 L46,62 L50,58 L39.4,47.4 C41,45.4 42,42.8 42,40 Z M28,48 C24.7,48 22,45.3 22,42 C22,38.7 24.7,36 28,36 C31.3,36 34,38.7 34,42 C34,45.3 31.3,48 28,48 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M80,42 C80,35.4 74.6,30 68,30 C65.2,30 62.6,31 60.6,32.6 L50,42 L54,46 L64.6,35.4 C66.6,37 68,39.6 68,42 Z M80,42 C80,48.6 74.6,54 68,54 C65.2,54 62.6,53 60.6,51.4 L54,58 L58,62 L64.6,55.4 C66.6,57 68,58 68,58 Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,54 L88,20"
+        android:strokeWidth="4"
+        android:strokeColor="#FFFFFF"/>
+    <!-- Person silhouette -->
+    <circle
+        android:fillColor="#FFFFFF"
+        android:cx="54"
+        android:cy="70"
+        android:r="6"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M42,92 C42,82.1 47.4,78 54,78 C60.6,78 66,82.1 66,92 Z"/>
+</vector>

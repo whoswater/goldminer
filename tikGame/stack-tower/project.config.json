@@ -1,0 +1,11 @@
+{
+    "description": "冲高高 - 抖音小游戏",
+    "setting": {
+        "es6": true,
+        "minified": true
+    },
+    "compileType": "game",
+    "projectname": "chonggaogao",
+    "condition": {},
+    "appid": "tta87adec7361c0f0402"
+}

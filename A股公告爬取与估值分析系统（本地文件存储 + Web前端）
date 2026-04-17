@@ -1,0 +1,148 @@
+# 项目：A股公告爬取与估值分析系统（本地文件存储 + Web前端）
+
+## 1. 项目目标
+开发一套完整的Web应用，满足以下功能：
+- 定期（每日）爬取巨潮资讯网的A股上市公司公告信息，并存储为本地CSV文件。
+- 定期（每日收盘后）计算各公司的估值（基于行业估值模型），得到内在价值与当前股价对比，生成低估率，并存储估值数据。
+- 前端提供Web界面，展示：
+  - 首页：市场估值趋势图、低估公司列表、最新公告。
+  - 公司详情页：公司基本信息、估值模型结果（内在价值 vs 当前股价）、历史PE/PB走势图、相关公告列表。
+  - 低估公司列表页：每日估值最低的20家公司（按低估幅度排序），并给出每家公司估值偏低的理由。
+  - 公告列表页：分页展示所有公告，支持按公司、类型筛选。
+- 所有数据使用本地文件存储（CSV/JSON），不依赖任何数据库。
+- 定时任务使用APScheduler在后台运行，无需手动触发。
+- 最终可通过浏览器直接访问 `http://127.0.0.1:5000` 查看。
+
+## 2. 技术栈
+- 后端：Python + Flask
+- 数据存储：CSV文件（pandas读写）
+- 定时任务：APScheduler
+- 前端：HTML5 + Bootstrap 5 + ECharts（图表）
+- 数据获取：akshare 或 tushare（用于获取股票列表、实时股价、财务数据等），若接口不可用则使用模拟数据。
+
+## 3. 功能模块与文件结构
+请生成以下文件及代码：
+
+### 3.1 项目目录结构
+```
+
+├── app/
+│   ├── __init__.py                 # Flask应用工厂
+│   ├── config.py                   # 配置（数据目录、日志目录）
+│   ├── api/                        # RESTful API（供前端调用）
+│   │   ├── market.py               # 市场数据API（PE趋势、行业对比）
+│   │   ├── stock.py                # 个股详情API
+│   │   ├── announcements.py        # 公告查询API
+│   │   └── undervalued.py          # 低估榜单API
+│   ├── views/                      # 页面路由（返回HTML模板）
+│   │   ├── main.py                 # 首页
+│   │   ├── stock.py                # 公司详情页
+│   │   ├── undervalued.py          # 低估列表页
+│   │   └── announcements.py        # 公告列表页
+│   ├── templates/                  # Jinja2模板
+│   │   ├── base.html               # 基础模板（导航栏）
+│   │   ├── index.html              # 首页
+│   │   ├── stock_detail.html       # 公司详情页
+│   │   ├── undervalued_list.html   # 低估列表页
+│   │   └── announcements.html      # 公告列表页
+│   ├── static/                     # 静态资源
+│   │   ├── css/style.css
+│   │   └── js/main.js              # 前端交互逻辑（调用API渲染图表）
+│   ├── tasks/                      # 定时任务
+│   │   ├── crawler.py              # 巨潮资讯公告爬虫
+│   │   ├── valuation_updater.py    # 估值计算更新
+│   │   └── scheduler.py            # 调度器启动
+│   └── utils/                      # 工具模块
+│       ├── file_storage.py         # 统一文件读写（CSV/JSON）
+│       └── valuation_models.py     # 各行业估值模型实现
+├── data/                           # 数据存储目录（自动创建）
+│   ├── announcements/              # 公告文件，按日期命名：YYYY-MM-DD.csv
+│   ├── stocks/                     # 股票基本信息：stock_list.csv
+│   ├── valuation/                  # 估值快照，按日期命名：YYYY-MM-DD.csv
+│   ├── daily_undervalued/          # 每日低估榜单，按日期命名：YYYY-MM-DD.csv
+│   └── historical/                 # 历史估值数据
+│       ├── pe_history/             # 每只股票的历史PE：{code}.csv
+│       └── pb_history/             # 每只股票的历史PB：{code}.csv
+├── logs/                           # 日志目录
+├── requirements.txt                # 依赖列表
+├── run.py                          # 启动入口（创建应用并启动调度器）
+└── README.md                       # 使用说明
+```
+
+### 3.2 关键实现要求
+#### 3.2.1 文件存储封装（`utils/file_storage.py`）
+- 提供函数：`save_announcements(df, date)`、`load_latest_valuation()`、`save_valuation_snapshot(df, date)`、`save_daily_undervalued(df, date)`、`update_historical_pe(code, date, pe)`、`update_historical_pb(code, date, pb)`、`load_stock_list()` 等。
+- 所有读写使用 pandas，自动创建目录，处理文件不存在的情况。
+
+#### 3.2.2 估值模型（`utils/valuation_models.py`）
+- 实现至少以下行业的估值模型：
+  - 银行：PB-ROE模型（合理PB = (ROE - g) / (r - g)）
+  - 保险：PEV法（若无数据则用PB）
+  - 周期行业（钢铁、有色等）：重置成本法（PB=1或行业底部均值）
+  - 消费（食品饮料）：PEG法（合理PE = 增长率 * 基准）
+  - 科技（计算机）：PS法（合理股价 = 预期营收 × 行业PS）
+- 模型参数可配置，支持从 `config.py` 或 `meta/industry_models.json` 读取。
+- 对无法获取财务数据的公司，使用默认模型（PE=15）。
+- 函数 `calculate_intrinsic_value(stock_code, industry, financials, market_data)` 返回内在价值（元/股）。
+
+#### 3.2.3 数据获取
+- 股票列表：使用 `akshare` 的 `stock_info_a_code_name()` 获取，保存至 `data/stocks/stock_list.csv`（若不可用则提供模拟数据）。
+- 实时股价：使用 `ak.stock_zh_a_spot()` 获取。
+- 财务数据：使用 `ak.stock_financial_analysis_indicator()` 获取，若不可用则用模拟数据。
+- 历史PE/PB：从本地 `historical/` 文件读取，若文件不存在则从 `akshare` 获取并保存。
+
+#### 3.2.4 公告爬虫（`tasks/crawler.py`）
+- 每日定时（如09:00）抓取前一日公告。
+- 使用巨潮资讯网的公告列表接口（需分析真实接口），或使用 `akshare` 的公告接口 `ak.stock_notice_report()`。
+- 字段：id（唯一标识）、stock_code、stock_name、title、announce_type、publish_date、url。
+- 存储为 `data/announcements/YYYY-MM-DD.csv`，同时可追加到总文件以方便查询。
+
+#### 3.2.5 估值更新（`tasks/valuation_updater.py`）
+- 每日定时（如18:00）执行：
+  1. 获取所有股票列表。
+  2. 对每只股票获取财务数据、市场数据（股价、行业PE等）。
+  3. 调用估值模型计算内在价值，计算低估幅度 = (内在价值 - 当前价)/当前价。
+  4. 将结果保存为 `data/valuation/YYYY-MM-DD.csv`。
+  5. 更新历史PE/PB文件。
+  6. 根据低估幅度排序，取前20名，生成榜单并保存为 `data/daily_undervalued/YYYY-MM-DD.csv`，同时生成每家公司低估理由（如“当前PE处于历史10%分位，行业景气度回升”等）。
+
+#### 3.2.6 前端页面与API
+- **页面路由**（返回HTML）：
+  - `/` -> 首页（展示市场PE趋势图、前5低估公司、最新5条公告）。
+  - `/stock/<code>` -> 公司详情页。
+  - `/undervalued` -> 低估列表页（展示当日20家公司，支持行业筛选）。
+  - `/announcements` -> 公告列表页（分页、筛选）。
+- **API接口**（返回JSON）：
+  - `/api/market/pe_trend`：返回全市场平均PE近30天走势。
+  - `/api/industry/comparison`：各行业当前PE与历史中位数对比。
+  - `/api/undervalued/top`：返回当日低估前20名（含理由）。
+  - `/api/stock/<code>/info`：公司基本信息。
+  - `/api/stock/<code>/valuation`：公司估值详情（当前估值、历史PE/PB序列、内在价值等）。
+  - `/api/stock/<code>/announcements`：该公司公告列表。
+  - `/api/announcements`：公告列表（分页、筛选）。
+- **前端交互**：
+  - 页面加载时通过AJAX调用API获取数据，使用ECharts渲染图表。
+  - 表格数据动态加载，支持前端筛选/排序。
+  - 使用Bootstrap 5实现响应式布局。
+
+#### 3.2.7 定时调度（`tasks/scheduler.py`）
+- 使用APScheduler的BackgroundScheduler，在应用启动时添加任务：
+  - `crawler.crawl_announcements`，每天9:00执行。
+  - `valuation_updater.update_valuation`，每天18:00执行。
+- 在 `run.py` 中调用 `init_scheduler(app)` 启动调度器。
+
+#### 3.2.8 启动与测试
+- `run.py` 启动Flask应用，并启动调度器。
+- 提供 `README.md` 说明如何安装依赖（pip install -r requirements.txt）并运行（python run.py）。
+- 程序启动后，访问 `http://127.0.0.1:5000` 即可查看页面。初始运行时可能无数据，可通过手动调用一次估值更新生成模拟数据，或等待定时任务执行。
+
+## 4. 注意事项
+- 数据接口稳定性：由于akshare可能失效，代码中需捕获异常，当真实数据不可用时，使用模拟数据填充（确保前端能显示）。
+- 文件并发：定时任务运行时写入文件，避免同时写入同一文件。由于调度器是单线程，一般不会冲突，但可加锁保护。
+- 性能：全市场估值计算可能耗时，可考虑使用多线程或分批处理，但初始版本可接受（A股约5000只，逐一计算可能需几分钟）。
+- 日志：使用logging记录任务执行情况，输出到 `logs/` 目录。
+- 前端兼容性：确保图表在移动端正常显示。
+
+## 5. 期望输出
+请根据以上所有要求，生成完整的项目代码，包括所有文件的详细内容（代码需完整，可直接复制粘贴）。确保代码可运行，注释清晰，并在README中说明如何使用。
+

@@ -1,0 +1,71 @@
+body {
+    font-size: 15px;
+    background-color: #f5f5f5;
+}
+
+.sidebar {
+    width: 200px;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar .nav-link {
+    font-size: 15px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+}
+
+.sidebar .nav-link.active,
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.main-content {
+    min-height: 100vh;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.btn {
+    font-size: 14px;
+}
+
+.status-badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status-未加工 { background: #ffc107; color: #000; }
+.status-加工中 { background: #17a2b8; color: #fff; }
+.status-已完成 { background: #28a745; color: #fff; }
+.status-合格 { background: #28a745; color: #fff; }
+.status-不合格 { background: #dc3545; color: #fff; }
+.status-待返工 { background: #fd7e14; color: #fff; }
+.status-返工完成 { background: #20c997; color: #fff; }
+
+.card {
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.required::after {
+    content: ' *';
+    color: red;
+}

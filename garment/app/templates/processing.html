@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-4">加工进度</h4>
+
+<!-- Add form -->
+<div class="card">
+    <div class="card-header bg-white">新增加工记录（分批次）</div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('processing.add_processing') }}">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-6">
+                    <label class="form-label required">关联拿料记录</label>
+                    <select name="material_id" class="form-select" required id="materialSelect">
+                        <option value="">请选择拿料记录</option>
+                        {% for m in materials %}
+                        {% if m.remaining_qty > 0 %}
+                        <option value="{{ m.id }}" data-remaining="{{ m.remaining_qty }}" data-total="{{ m.total_qty or 0 }}">
+                            {{ m.code }} | {{ m.contractor_name }} | {{ m.items_desc or '无明细' }} | 剩余可分配 {{ m.remaining_qty }}/{{ m.total_qty or 0 }}件
+                        </option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required">本批次数量</label>
+                    <div class="input-group">
+                        <input type="number" name="batch_qty" class="form-control" id="batchQty" min="1" required placeholder="输入数量">
+                        <span class="input-group-text" id="remainHint">剩余 -</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100" type="submit">创建加工记录</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="card">
+    <div class="card-body">
+        <form method="GET" class="row g-2 align-items-end">
+            <div class="col-auto">
+                <select name="contractor_id" class="form-select form-select-sm">
+                    <option value="">全部总包方</option>
+                    {% for c in contractors %}
+                    <option value="{{ c.id }}" {{ 'selected' if contractor_filter == c.id|string }}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <select name="status" class="form-select form-select-sm">
+                    <option value="">全部状态</option>
+                    {% for st in ['未加工', '加工中', '已完成'] %}
+                    <option value="{{ st }}" {{ 'selected' if status_filter == st }}>{{ st }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-sm btn-outline-primary" type="submit">筛选</button>
+                <a href="{{ url_for('processing.list_processing') }}" class="btn btn-sm btn-outline-secondary">清除</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Records table -->
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>编号</th><th>拿料单</th><th>总包方</th><th>衣物明细</th>
+                    <th>批次数量</th><th>流程进度</th><th>状态</th><th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for r in records %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td><small>{{ r.material_code }}</small></td>
+                <td>{{ r.contractor_name }}</td>
+                <td><small>{{ r.items_desc or '-' }}</small></td>
+                <td><strong>{{ r.batch_qty }}</strong> 件</td>
+                <td>
+                    {% for s in r.steps %}
+                    <span class="badge {{ 'bg-success' if s.complete_date else 'bg-light text-dark border' }}">
+                        {{ s.step_name }}{% if s.complete_date %} ✓{% endif %}
+                    </span>
+                    {% endfor %}
+                    {% if not r.steps %}<span class="text-muted small">未配置流程</span>{% endif %}
+                </td>
+                <td><span class="status-badge status-{{ r.status }}">{{ r.status }}</span></td>
+                <td>
+                    <a href="{{ url_for('processing.detail', id=r.id) }}" class="btn btn-sm btn-outline-primary">录入进度</a>
+                    <form method="POST" action="{{ url_for('processing.delete_processing', id=r.id) }}" class="d-inline">
+                        <button class="btn btn-sm btn-outline-danger btn-delete" type="submit">删除</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% if not records %}
+            <tr><td colspan="8" class="text-center text-muted py-4">暂无加工记录</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+var sel = document.getElementById('materialSelect');
+var hint = document.getElementById('remainHint');
+var batchInput = document.getElementById('batchQty');
+sel.addEventListener('change', function() {
+    var opt = this.options[this.selectedIndex];
+    var remaining = opt.dataset.remaining;
+    if (remaining) {
+        hint.textContent = '剩余 ' + remaining;
+        batchInput.max = remaining;
+        batchInput.value = remaining;
+    } else {
+        hint.textContent = '剩余 -';
+        batchInput.max = '';
+        batchInput.value = '';
+    }
+});
+</script>
+{% endblock %}

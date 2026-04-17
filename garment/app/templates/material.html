@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-4">拿料记录</h4>
+
+<!-- Add form -->
+<div class="card">
+    <div class="card-header bg-white">新增拿料记录</div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('material.add_material') }}" id="addForm">
+            <div class="row g-3 mb-3">
+                <div class="col-md-3">
+                    <label class="form-label required">总包方</label>
+                    <select name="contractor_id" class="form-select" required>
+                        <option value="">请选择</option>
+                        {% for c in contractors %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label required">拿料日期</label>
+                    <input type="date" name="pickup_date" class="form-control" value="{{ today }}" max="{{ today }}" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">备注</label>
+                    <input type="text" name="notes" class="form-control" placeholder="如：加急件">
+                </div>
+            </div>
+
+            <label class="form-label required">衣物明细</label>
+            <table class="table table-sm" id="itemsTable">
+                <thead class="table-light">
+                    <tr><th>款式</th><th>尺码</th><th>数量</th><th style="width:60px"></th></tr>
+                </thead>
+                <tbody>
+                    <tr class="item-row">
+                        <td>
+                            <select name="item_style_id" class="form-select form-select-sm" required>
+                                <option value="">选择款式</option>
+                                {% for s in styles %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}
+                            </select>
+                        </td>
+                        <td><input type="text" name="item_size" class="form-control form-control-sm" placeholder="如 M / L / XL"></td>
+                        <td><input type="number" name="item_quantity" class="form-control form-control-sm" min="1" required></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-sm btn-outline-secondary mb-3" onclick="addItemRow()">+ 添加一行</button>
+            <div>
+                <button class="btn btn-primary" type="submit">保存</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Filters -->
+<div class="card">
+    <div class="card-body">
+        <form method="GET" class="row g-2 align-items-end">
+            <div class="col-auto">
+                <select name="contractor_id" class="form-select form-select-sm">
+                    <option value="">全部总包方</option>
+                    {% for c in contractors %}
+                    <option value="{{ c.id }}" {{ 'selected' if contractor_filter == c.id|string }}>{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <select name="style_id" class="form-select form-select-sm">
+                    <option value="">全部款式</option>
+                    {% for s in styles %}
+                    <option value="{{ s.id }}" {{ 'selected' if style_filter == s.id|string }}>{{ s.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-auto">
+                <input type="date" name="pickup_date" class="form-control form-control-sm" value="{{ date_filter }}">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-sm btn-outline-primary" type="submit">筛选</button>
+                <a href="{{ url_for('material.list_materials') }}" class="btn btn-sm btn-outline-secondary">清除</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Records table -->
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>编号</th><th>总包方</th><th>衣物明细</th><th>总数量</th>
+                    <th>拿料日期</th><th>状态</th><th>备注</th><th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for m in materials %}
+            <tr>
+                <td>{{ m.code }}</td>
+                <td>{{ m.contractor_name }}</td>
+                <td><small>{{ m.items_desc or '-' }}</small></td>
+                <td>{{ m.total_qty or 0 }}</td>
+                <td>{{ m.pickup_date }}</td>
+                <td><span class="status-badge status-{{ m.status }}">{{ m.status }}</span></td>
+                <td>{{ m.notes }}</td>
+                <td>
+                    <a href="{{ url_for('material.detail', id=m.id) }}" class="btn btn-sm btn-primary">详情</a>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editMaterial{{ m.id }}">修改</button>
+                    <form method="POST" action="{{ url_for('material.delete_material', id=m.id) }}" class="d-inline">
+                        <button class="btn btn-sm btn-outline-danger btn-delete" type="submit">删除</button>
+                    </form>
+                </td>
+            </tr>
+            <!-- Edit modal (simplified: redirect to detail for full edit) -->
+            <div class="modal fade" id="editMaterial{{ m.id }}" tabindex="-1">
+                <div class="modal-dialog modal-lg"><div class="modal-content">
+                    <form method="POST" action="{{ url_for('material.edit_material', id=m.id) }}" class="edit-form">
+                        <div class="modal-header"><h5 class="modal-title">修改拿料记录 {{ m.code }}</h5></div>
+                        <div class="modal-body">
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label required">总包方</label>
+                                    <select name="contractor_id" class="form-select" required>
+                                        {% for c in contractors %}
+                                        <option value="{{ c.id }}" {{ 'selected' if c.id == m.contractor_id }}>{{ c.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label required">拿料日期</label>
+                                    <input type="date" name="pickup_date" class="form-control" value="{{ m.pickup_date }}" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">备注</label>
+                                    <input type="text" name="notes" class="form-control" value="{{ m.notes }}">
+                                </div>
+                            </div>
+                            <label class="form-label required">衣物明细</label>
+                            <table class="table table-sm edit-items-table">
+                                <thead class="table-light"><tr><th>款式</th><th>尺码</th><th>数量</th><th style="width:60px"></th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="addEditRow(this)">+ 添加一行</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-primary">保存修改</button>
+                        </div>
+                    </form>
+                </div></div>
+            </div>
+            {% endfor %}
+            {% if not materials %}
+            <tr><td colspan="8" class="text-center text-muted py-4">暂无记录，请先在"基础设置"中添加总包方和款式</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+var stylesJson = {{ styles|map(attribute='id')|list|tojson }};
+var stylesOptions = `<option value="">选择款式</option>{% for s in styles %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}`;
+
+function addItemRow() {
+    var tbody = document.querySelector('#itemsTable tbody');
+    var tr = document.createElement('tr');
+    tr.className = 'item-row';
+    tr.innerHTML = '<td><select name="item_style_id" class="form-select form-select-sm" required>' + stylesOptions + '</select></td>'
+        + '<td><input type="text" name="item_size" class="form-control form-control-sm" placeholder="如 M / L / XL"></td>'
+        + '<td><input type="number" name="item_quantity" class="form-control form-control-sm" min="1" required></td>'
+        + '<td><button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest(\'tr\').remove()">×</button></td>';
+    tbody.appendChild(tr);
+}
+
+function addEditRow(btn) {
+    var tbody = btn.previousElementSibling.querySelector('tbody');
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td><select name="item_style_id" class="form-select form-select-sm" required>' + stylesOptions + '</select></td>'
+        + '<td><input type="text" name="item_size" class="form-control form-control-sm"></td>'
+        + '<td><input type="number" name="item_quantity" class="form-control form-control-sm" min="1" required></td>'
+        + '<td><button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest(\'tr\').remove()">×</button></td>';
+    tbody.appendChild(tr);
+}
+
+// Populate edit modals with existing items via data attributes
+document.querySelectorAll('.modal').forEach(function(modal) {
+    modal.addEventListener('show.bs.modal', function() {
+        var tbody = modal.querySelector('.edit-items-table tbody');
+        if (!tbody || tbody.dataset.loaded) return;
+        var materialId = modal.id.replace('editMaterial', '');
+        fetch('/material/' + materialId + '/items')
+            .then(r => r.json())
+            .then(items => {
+                items.forEach(function(item) {
+                    var tr = document.createElement('tr');
+                    tr.innerHTML = '<td><select name="item_style_id" class="form-select form-select-sm" required>' + stylesOptions + '</select></td>'
+                        + '<td><input type="text" name="item_size" class="form-control form-control-sm" value="' + (item.size || '') + '"></td>'
+                        + '<td><input type="number" name="item_quantity" class="form-control form-control-sm" min="1" required value="' + item.quantity + '"></td>'
+                        + '<td><button type="button" class="btn btn-sm btn-outline-danger" onclick="this.closest(\'tr\').remove()">×</button></td>';
+                    tbody.appendChild(tr);
+                    tr.querySelector('select').value = item.style_id;
+                });
+                tbody.dataset.loaded = '1';
+            });
+    });
+});
+</script>
+{% endblock %}

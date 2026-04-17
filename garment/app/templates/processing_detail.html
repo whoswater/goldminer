@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex align-items-center mb-4">
+    <a href="{{ url_for('processing.list_processing') }}" class="btn btn-sm btn-outline-secondary me-3">返回列表</a>
+    <h4 class="mb-0">加工记录 #{{ proc.id }} — {{ proc.contractor_name }}</h4>
+    <span class="status-badge status-{{ proc.status }} ms-3">{{ proc.status }}</span>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <strong>拿料单：</strong>{{ proc.material_code }} |
+                {{ proc.items_desc or '无明细' }} | 拿料日期 {{ proc.pickup_date }}
+            </div>
+            <div class="col-md-3">
+                <strong>本批次数量：</strong>
+                <span class="fs-5 text-primary fw-bold">{{ proc.batch_qty }}</span> 件
+            </div>
+            <div class="col-md-3">
+                <strong>拿料总量：</strong>{{ proc.total_qty or 0 }} 件
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if not steps %}
+<div class="card">
+    <div class="card-body text-center text-muted py-4">
+        该总包方尚未配置制衣流程，请先到
+        <a href="{{ url_for('flow.index') }}">制衣流程管理</a> 中配置
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-header bg-white">流程步骤</div>
+    <div class="card-body p-0">
+        <table class="table mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th style="width:50px">顺序</th>
+                    <th>步骤</th>
+                    <th>负责工人</th>
+                    <th>完成数量</th>
+                    <th>完成日期</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for s in steps %}
+            <tr class="{{ 'table-success' if s.complete_date else '' }}">
+                <td><span class="badge bg-secondary">{{ s.step_order }}</span></td>
+                <td><strong>{{ s.step_name }}</strong></td>
+                <td>{{ s.worker_name or '-' }}</td>
+                <td>{{ s.quantity if s.quantity else '-' }}</td>
+                <td>{{ s.complete_date or '-' }}</td>
+                <td>
+                    {% if s.complete_date %}
+                    <span class="badge bg-success">已完成</span>
+                    {% else %}
+                    <span class="badge bg-light text-dark border">待处理</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editStep{{ s.id }}">
+                        {{ '修改' if s.complete_date else '录入' }}
+                    </button>
+                </td>
+            </tr>
+            <div class="modal fade" id="editStep{{ s.id }}" tabindex="-1">
+                <div class="modal-dialog"><div class="modal-content">
+                    <form method="POST" action="{{ url_for('processing.update_step', step_id=s.id) }}">
+                        <div class="modal-header"><h5 class="modal-title">{{ s.step_name }}</h5></div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">负责工人</label>
+                                <select name="worker_id" class="form-select">
+                                    <option value="">选择工人</option>
+                                    {% for w in workers %}
+                                    <option value="{{ w.id }}" {{ 'selected' if w.id == s.worker_id }}>{{ w.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">完成数量 <small class="text-muted">（本批次 {{ proc.batch_qty }} 件）</small></label>
+                                <input type="number" name="quantity" class="form-control"
+                                       value="{{ s.quantity if s.quantity else proc.batch_qty }}"
+                                       min="1" max="{{ proc.batch_qty }}">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">完成日期</label>
+                                <input type="date" name="complete_date" class="form-control"
+                                       value="{{ s.complete_date or today }}" max="{{ today }}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="submit" class="btn btn-primary">保存</button>
+                        </div>
+                    </form>
+                </div></div>
+            </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

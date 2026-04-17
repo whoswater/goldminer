@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="mb-4">我的统计</h4>
+
+<!-- Date range -->
+<div class="card">
+    <div class="card-body">
+        <form method="GET" class="row g-2 align-items-end">
+            <div class="col-md-2">
+                <label class="form-label">开始日期</label>
+                <input type="date" name="start" class="form-control form-control-sm" value="{{ start }}">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">结束日期</label>
+                <input type="date" name="end" class="form-control form-control-sm" value="{{ end }}">
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-primary btn-sm" type="submit">查询</button>
+                <a href="{{ url_for('stats.index') }}" class="btn btn-outline-secondary btn-sm">本月</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Summary -->
+<div class="card">
+    <div class="card-header bg-white">汇总</div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col-md-6">
+                <h3 class="text-primary">{{ my_totals.total_qty or 0 }}</h3>
+                <div class="text-muted">完成总量（件）</div>
+            </div>
+            <div class="col-md-6">
+                <h3 class="text-primary">{{ my_totals.total_count or 0 }}</h3>
+                <div class="text-muted">完成步骤数</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detail breakdown -->
+<div class="card">
+    <div class="card-header bg-white">明细（按总包方/步骤）</div>
+    <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+            <thead class="table-light">
+                <tr><th>总包方</th><th>步骤</th><th>完成量</th><th>次数</th></tr>
+            </thead>
+            <tbody>
+            {% for s in my_stats %}
+            <tr>
+                <td>{{ s.contractor_name }}</td>
+                <td>{{ s.step_name }}</td>
+                <td>{{ s.total_qty or 0 }}</td>
+                <td>{{ s.total_count }}</td>
+            </tr>
+            {% endfor %}
+            {% if not my_stats %}
+            <tr><td colspan="4" class="text-center text-muted py-4">该时段暂无加工记录</td></tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
