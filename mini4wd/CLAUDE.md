@@ -51,10 +51,8 @@ npm run dev
 
 ## Database
 
-- Host: rm-uf62h6o3tcrd8bte6.mysql.rds.aliyuncs.com
-- User: develop_user / developadmin@123
-- Schema: test
-- 建表SQL: `backend/src/main/resources/db/schema.sql`
+- 数据库连接信息通过环境变量注入(DB_HOST/DB_USER/DB_PASS)，不硬编码在代码中
+- 建表SQL: `mini4wd-server/src/main/resources/db/schema.sql`
 - 初始管理员: admin (密码需通过BCrypt生成后替换SQL中的hash)
 
 ## Architecture
