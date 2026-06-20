@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-迷你四驱车赛事管理系统 - 包含后端API、Web管理端、微信小程序端三个独立项目。系统实现赛事"创建-报名管理-分组编排-计时录分-成绩统计-公示归档"全流程数字化。
+迷你四驱车赛事管理系统 - 包含后端API、Web管理端、微信小程序端三个独立项目。系统实现赛事"创建-报名管理-分组编排-计时录分-成绩统计-公示"全流程数字化。
 
 ## Project Structure
 
@@ -78,12 +78,52 @@ npm run dev
 ## Key Business Rules
 
 - **角色权限**: SUPER_ADMIN(全权限) > EVENT_ADMIN(单赛事管理, 仅能管自创赛事). RACER 是默认角色.
-- **赛事状态流转**: DRAFT → REG_NOT_STARTED → REGISTRATION → REG_CLOSED → GROUPING → IN_PROGRESS → ENDED → PUBLISHED → ARCHIVED
+- **赛事状态流转**: DRAFT → REG_NOT_STARTED → REGISTRATION → IN_PROGRESS → ENDED → PUBLISHED
 - **分组规则**: 每组人数不可超过赛道轨数(3轨/5轨)
 - **成绩规则**: 用时格式 MM:SS.mmm，违规罚时叠加，未完赛排名置后
 - **参赛编号格式**: 赛事ID后3位 + 3位序号 (如 001001)
 - **登录安全**: 连续3次失败锁定10分钟
 - **赛制配置**: event_group.round_config JSON 定义每轮 mode/advancePerGroup/mandatory/source
+
+## 实际操作入口 (2026-06)
+
+跟"通常 admin 流程"差异较大, 列实际入口避免误导:
+
+### 报名
+| 操作 | 入口 |
+|---|---|
+| 导入 | PC EventDetail "上传报名表" / mp rosterImport |
+| 删除 | PC EventDetail table 操作列 / mp 同 |
+| 审核 (通过/驳回) | PC RegistrationTab 通过/驳回按钮 |
+| 编辑 | 无单独入口 |
+
+### 分组
+| 操作 | 入口 |
+|---|---|
+| 自动分组 R1 | "开始比赛"按钮一键触发, 内部调 autoGroup |
+| 手动分组 | **无** |
+| 推进下一轮 | **无单独按钮** — `advanceRound` 是"确认结果"提交时内部自动触发 |
+| 回滚/调整结果 | mp "调整结果" 按钮 / PC SpectatorView 同, 调 rollbackRound |
+
+### 成绩
+| 操作 | 入口 |
+|---|---|
+| 录分 / 确认结果 | PC SpectatorView / mp eventProgress |
+| 手动锁定 | **无** — `lockScores` 是"确认结果"提交时内部自动触发 |
+| 手动解锁 | **无** — `unlockScores` 内部 (rollback 时用) |
+
+### 赛事状态推进
+| 目标状态 | 入口 |
+|---|---|
+| REGISTRATION (开放报名) | PC "推进状态" 按钮 |
+| IN_PROGRESS (开始比赛) | "开始比赛" 按钮 (含一键 R1 分组) |
+| ENDED | 决赛 submitFinalRanks 内部自动 |
+| PUBLISHED (公示) | PC "推进状态" 按钮 |
+
+### 已删除 / 不存在的状态和角色
+- `ARCHIVED` (归档): 状态本身已删, 前端 label 残留兜底
+- `REG_CLOSED` / `GROUPING`: 历史 doc 漂移, 后端枚举从未有
+- `VENUE_OWNER` / `REFEREE` 角色: 已从代码删除 (虚设)
 
 ## 个人赛 vs 组队赛流程
 
