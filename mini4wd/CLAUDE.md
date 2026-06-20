@@ -77,7 +77,7 @@ npm run dev
 
 ## Key Business Rules
 
-- **角色权限**: SUPER_ADMIN(全权限) > VENUE_OWNER(本场地全权限) > EVENT_ADMIN(单赛事管理) > REFEREE(成绩录入)
+- **角色权限**: SUPER_ADMIN(全权限) > EVENT_ADMIN(单赛事管理, 仅能管自创赛事). RACER 是默认角色.
 - **赛事状态流转**: DRAFT → REG_NOT_STARTED → REGISTRATION → REG_CLOSED → GROUPING → IN_PROGRESS → ENDED → PUBLISHED → ARCHIVED
 - **分组规则**: 每组人数不可超过赛道轨数(3轨/5轨)
 - **成绩规则**: 用时格式 MM:SS.mmm，违规罚时叠加，未完赛排名置后
